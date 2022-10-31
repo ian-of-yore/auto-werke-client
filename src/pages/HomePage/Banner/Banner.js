@@ -50,7 +50,7 @@ const bannerData = [
 
 const Banner = () => {
     return (
-        <div className="carousel w-full mb-32 rounded-lg" style={{ height: "600px" }}>
+        <div className="carousel mb-20 rounded-lg">
             {
                 bannerData.map(slide => <BannerItem
                     key={slide.id}
