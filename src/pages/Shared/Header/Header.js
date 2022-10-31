@@ -5,11 +5,11 @@ import logo from '../../../assets/auto-werke-logo-02.jpg'
 const Header = () => {
 
     const menuItems = <>
-        <li><Link to='/'>Home</Link></li>
+        <li className='font-semibold'><Link to='/'>Home</Link></li>
     </>
 
     return (
-        <div className="navbar bg-base-200">
+        <div data-theme="lofi" className="navbar h-20 max-w-screen-xl mx-auto mt-3 mb-8 bg-base-200 rounded-lg">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -19,8 +19,8 @@ const Header = () => {
                         {menuItems}
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost normal-case text-xl">
-                    <img src={logo} alt="" style={{ width: "60px" }} /></Link>
+                <Link to='/'>
+                    <img className='border border-black' src={logo} alt="" style={{ width: "110px" }} /></Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
@@ -28,7 +28,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Get started</a>
+                <button className="btn btn-outline btn-accent">Appointment</button>
             </div>
         </div>
     );
