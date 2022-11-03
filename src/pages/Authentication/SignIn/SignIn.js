@@ -12,7 +12,7 @@ const SignIn = () => {
                 <div className='mr-5'>
                     <img src={loginImg} alt="" style={{ height: "50vh" }} />
                 </div>
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl">
+                <div className="card flex-shrink-0 w-full max-w-lg shadow-2xl">
                     <h1 className='text-4xl text-center font-semibold pt-5'>Sign In</h1>
                     <div className="card-body">
                         <form>
