@@ -27,6 +27,27 @@ const Orders = () => {
         }
     }
 
+    const handleOrderStatus = (id) => {
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ status: "Approved" })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    const remaining = orders.filter(order => order._id !== id);
+                    const selected = orders.find(order => order._id === id);
+                    selected.status = "Approved";
+                    const newOrders = [...remaining, selected];
+                    setOrders(newOrders)
+                }
+            })
+    }
+
     return (
         <div className='w-3/4 mx-auto mb-32'>
             <p className='text-4xl text-center mb-5'>Total orders in your cart: {orders.length}</p>
@@ -49,6 +70,7 @@ const Orders = () => {
                                 key={order._id}
                                 order={order}
                                 handleDeleteOrder={handleDeleteOrder}
+                                handleOrderStatus={handleOrderStatus}
                             ></OrderRow>)
                         }
                     </tbody>
