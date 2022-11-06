@@ -3,14 +3,25 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import OrderRow from './OrderRow';
 
 const Orders = () => {
-    const { user } = useContext(AuthContext);
+    const { user, userLogOut } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/orders?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setOrders(data))
-    }, [user?.email])
+        fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('autoWerke-Token')}`
+            }
+        })
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return userLogOut();
+                }
+                return res.json();
+            })
+            .then(data => {
+                setOrders(data);
+            })
+    }, [user?.email, userLogOut])
 
     const handleDeleteOrder = (id) => {
         const confirm = window.confirm("Delete this order?")
@@ -50,7 +61,7 @@ const Orders = () => {
 
     return (
         <div className='w-3/4 mx-auto mb-32'>
-            <p className='text-4xl text-center mb-5'>Total orders in your cart: {orders.length}</p>
+            <p className='text-4xl text-center mb-5'>Total orders in your cart:</p>
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     <thead>

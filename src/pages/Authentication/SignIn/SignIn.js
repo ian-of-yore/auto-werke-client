@@ -20,8 +20,22 @@ const SignIn = () => {
         const password = form.password.value;
         userSignIn(email, password)
             .then((result) => {
-                // console.log(result.user);
                 form.reset();
+                // folling codes are for jwt token
+                const userEmail = {
+                    email: result.user.email
+                }
+                fetch('http://localhost:5000/jwt', {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(userEmail)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem("autoWerke-Token", data.token)
+                    })
                 navigate(from, { replace: true });
             })
             .catch((err) => console.error(err))

@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const userLogOut = () => {
-        setLoading(true);
+        localStorage.removeItem('autoWerke-Token');
         return signOut(auth);
     }
 
