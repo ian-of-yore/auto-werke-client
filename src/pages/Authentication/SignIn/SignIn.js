@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginImg from '../../../assets/images/login/login.svg';
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -7,8 +7,11 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 
 const SignIn = () => {
-
     const { userSignIn } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -18,8 +21,8 @@ const SignIn = () => {
         userSignIn(email, password)
             .then((result) => {
                 // console.log(result.user);
-                
                 form.reset();
+                navigate(from, { replace: true });
             })
             .catch((err) => console.error(err))
     }

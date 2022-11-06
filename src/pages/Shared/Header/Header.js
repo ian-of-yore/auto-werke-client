@@ -1,8 +1,17 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/auto-werke-logo-02.jpg'
+import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Header = () => {
+    const { user, userLogOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        userLogOut()
+            .then({})
+            .catch((err) => console.log(err))
+    }
 
     const menuItems = <>
         <li className='font-semibold'><Link to='/'>Home</Link></li>
@@ -29,7 +38,12 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className='btn btn-outline mr-4'><Link to='/signin'>Sign In</Link></button>
+                {
+                    user?.uid ?
+                        <button onClick={handleLogOut} className='btn btn-outline mr-4'>Sign Out</button>
+                        :
+                        <button className='btn btn-outline mr-4'><Link to='/signin'>Sign In</Link></button>
+                }
                 <button className="btn btn-outline btn-accent">Appointment</button>
             </div>
         </div>
